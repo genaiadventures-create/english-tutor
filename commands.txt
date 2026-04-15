@@ -1,0 +1,14 @@
+docker compose exec -u root openclaw-gateway apt install -y python3-pip ffmpeg
+docker compose exec openclaw-gateway pip3 list
+docker compose cp /root/english-tutor/requirements.txt openclaw-gateway:/tmp/requirements.txt
+docker compose exec -u root openclaw-gateway apt update
+docker compose exec openclaw-gateway openclaw skills list
+docker compose logs openclaw-gateway --tail 500 | grep -E "skill|english-tutor|loading|register|tool"
+
+[Fixes]
+docker compose exec -u root openclaw-gateway mkdir -p /var/lib/apt/lists/partial
+docker compose exec -u root openclaw-gateway chmod 755 /var/lib/apt/lists/partial
+
+
+[Didn't work]
+docker compose exec -u root openclaw-gateway pip3 install -r /tmp/requirements.txt

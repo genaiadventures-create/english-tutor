@@ -15,11 +15,20 @@ Production-ready single-agent (later multi-agent) tutor built on OpenClaw + Lang
 - Long-term memory of user mistakes and progress
 
 ### Instruction to copy the skill related files to OpenClaw workspace:
-rsync -av --exclude='venv' --exclude='.git' --exclude='__pycache__' --exclude='*.pyc' --exclude='temp_*'          . ~/.openclaw/workspace/skills/english-tutor/
+rsync -av \
+  --include='SKILL.md' \
+  --include='agent.md' \
+  --include='requirements.txt' \
+  --include='tools/' \
+  --include='tools/*.py' \
+  --exclude='*' \
+  . ~/.openclaw/workspace/skills/english-tutor/
 
 # Instructions for OpenClaw Agent:
 # Run the following command (or equivalent of this command) to install the skill dependencies:
 docker compose exec -u root openclaw-gateway pip3 install --break-system-packages -r english-tutor/requirements.txt
+
+docker compose restart openclaw-gateway
 
 ## Tools
 - `transcribe_voice` – Converts voice notes to text (Hindi + English)

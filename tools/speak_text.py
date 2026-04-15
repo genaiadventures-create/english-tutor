@@ -11,14 +11,15 @@ except ImportError:
         return func
 
 @tool
-def speak_text(text: str, accent: str = "indian") -> str:
+def speak_text(corrected_sentence: str, accent: str = "indian") -> str:
     """
+    If Openclaw is calling this tool after correct_english tool, then use the corrected_sentence as the text to speak.
     Convert text to speech and return a file path that OpenClaw can send as voice.
     Uses gTTS with Indian English accent.
     """
-    cleaned_text = (text or "").strip()
+    cleaned_text = (corrected_sentence or "").strip()
     if not cleaned_text:
-        raise ValueError("text must be a non-empty string")
+        raise ValueError("corrected_sentence must be a non-empty string")
 
     tld = _accent_to_tld(accent)
     tts = gTTS(text=cleaned_text, lang="en", tld=tld, slow=False)
