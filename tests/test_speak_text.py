@@ -18,10 +18,12 @@ def test_speak_text_creates_audio_file(monkeypatch):
                 file_obj.write(b"mp3-content")
 
     monkeypatch.setattr(speak_module, "gTTS", FakeTTS)
+    expected_output_dir = os.path.join(os.getcwd(), ".english_tutor_audio")
 
     output_path = speak_module.speak_text("Hello from tutor", "indian")
     assert os.path.exists(output_path)
     assert os.path.getsize(output_path) > 0
+    assert output_path.startswith(expected_output_dir + os.sep)
 
     os.unlink(output_path)
 

@@ -23,10 +23,16 @@ def speak_text(corrected_sentence: str, accent: str = "indian") -> str:
 
     tld = _accent_to_tld(accent)
     tts = gTTS(text=cleaned_text, lang="en", tld=tld, slow=False)
+    output_dir = _get_audio_output_dir()
 
     temp_path = ""
     try:
-        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+        with tempfile.NamedTemporaryFile(
+            suffix=".mp3",
+            prefix="english_tutor_",
+            dir=output_dir,
+            delete=False,
+        ) as temp_file:
             temp_path = temp_file.name
         tts.save(temp_path)
     except Exception as exc:
@@ -40,6 +46,17 @@ def speak_text(corrected_sentence: str, accent: str = "indian") -> str:
         raise RuntimeError("Speech synthesis failed to produce a valid audio file")
 
     return temp_path  # OpenClaw will handle uploading the voice note
+
+
+def _get_audio_output_dir() -> str:
+    configured = os.getenv("ENGLISH_TUTOR_AUDIO_DIR", "").strip()
+    if configured:
+        output_dir = os.path.abspath(configured)
+    else:
+        output_dir = os.path.join(os.getcwd(), ".english_tutor_audio")
+
+    os.makedirs(output_dir, exist_ok=True)
+    return output_dir
 
 
 def _accent_to_tld(accent: str) -> str:

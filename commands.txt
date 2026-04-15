@@ -1,9 +1,27 @@
+### Instruction to copy the skill related files to OpenClaw workspace:
+rsync -av \
+  --include='SKILL.md' \
+  --include='agent.md' \
+  --include='requirements.txt' \
+  --include='tools/' \
+  --include='tools/*.py' \
+  --exclude='*' \
+  . ~/.openclaw/workspace/skills/english-tutor/
+
+# Instructions for OpenClaw Agent:
+# Run the following command (or equivalent of this command) to install the skill dependencies:
+docker compose exec -u root openclaw-gateway pip3 install --break-system-packages -r english-tutor/requirements.txt
+
+docker compose restart openclaw-gateway
+
 docker compose exec -u root openclaw-gateway apt install -y python3-pip ffmpeg
 docker compose exec openclaw-gateway pip3 list
 docker compose cp /root/english-tutor/requirements.txt openclaw-gateway:/tmp/requirements.txt
 docker compose exec -u root openclaw-gateway apt update
 docker compose exec openclaw-gateway openclaw skills list
 docker compose logs openclaw-gateway --tail 500 | grep -E "skill|english-tutor|loading|register|tool"
+curl -4 ifconfig.me
+docker compose exec openclaw-gateway openclaw dashboard
 
 [Fixes]
 docker compose exec -u root openclaw-gateway mkdir -p /var/lib/apt/lists/partial

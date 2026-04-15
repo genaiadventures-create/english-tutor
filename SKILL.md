@@ -8,29 +8,17 @@ author: genai.adventures
 
 # English Tutor for Hindi Speakers
 
-Production-ready single-agent (later multi-agent) tutor built on OpenClaw + LangGraph.
+Production-ready single-agent (later multi-agent) tutor.
 - Supports voice notes (STT + TTS)
-- Structured English corrections with Hindi explanations
-- Gamification and daily challenges
-- Long-term memory of user mistakes and progress
-
-### Instruction to copy the skill related files to OpenClaw workspace:
-rsync -av \
-  --include='SKILL.md' \
-  --include='agent.md' \
-  --include='requirements.txt' \
-  --include='tools/' \
-  --include='tools/*.py' \
-  --exclude='*' \
-  . ~/.openclaw/workspace/skills/english-tutor/
-
-# Instructions for OpenClaw Agent:
-# Run the following command (or equivalent of this command) to install the skill dependencies:
-docker compose exec -u root openclaw-gateway pip3 install --break-system-packages -r english-tutor/requirements.txt
-
-docker compose restart openclaw-gateway
+- Hindi-to-English translation practice with structured evaluation
+- Gamification and daily challenges (not implemented yet)
+- Long-term memory of user mistakes and progress (not implemented yet)
 
 ## Tools
 - `transcribe_voice` – Converts voice notes to text (Hindi + English)
-- `speak_text` – Generates voice replies using gTTS
-- `correct_english` – Structured grammar correction with Hindi explanation
+- `evaluate_translation` – Validates structured LLM grading output for translation attempts
+- `speak_text` – Generates voice replies using gTTS for correct English audio feedback
+- `delete_file` – Deletes temporary files (for example generated audio) after delivery
+
+## Initiation
+Whenever user sends /english that is a clue to start the english practice flow that is described in great detail as part of the agent.md file.
