@@ -14,7 +14,8 @@ Production-ready single-agent (later multi-agent) tutor built on OpenClaw + Lang
 - Gamification and daily challenges
 - Long-term memory of user mistakes and progress
 
-# rsync -av --exclude='venv' --exclude='.git' --exclude='__pycache__'          --exclude='*.pyc' --exclude='temp_*'          . ~/.openclaw/workspace/skills/english-tutor/
+### Instruction to copy the skill related files to OpenClaw workspace:
+rsync -av --exclude='venv' --exclude='.git' --exclude='__pycache__' --exclude='*.pyc' --exclude='temp_*'          . ~/.openclaw/workspace/skills/english-tutor/
 
 # Instructions for OpenClaw Agent:
 # Run the following command (or equivalent of this command) to install the skill dependencies:
