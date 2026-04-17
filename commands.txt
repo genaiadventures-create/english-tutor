@@ -23,6 +23,18 @@ docker compose logs openclaw-gateway --tail 500 | grep -E "skill|english-tutor|l
 curl -4 ifconfig.me
 docker compose exec openclaw-gateway openclaw dashboard
 
+[ssh]
+ssh-keygen -t ed25519 -f ~/.ssh/github -C "your-email@example.com"
+cat ~/.ssh/github.pub
+Go to GitHub → Settings → SSH and GPG keys → New SSH key
+ssh -i ~/.ssh/github -T git@github.com
+git remote set-url origin git@github.com:YOUR_USERNAME/YOUR_REPO.git
+git push origin main
+
+[openclaw dashboard]
+ssh -L 18789:localhost:18789 root@YOUR_DROPLET_IP
+http://localhost:18789/#token=cab9b40924f2f983d757d93e40614f086189c76a0ed61a0c8dc4f220d6d09b4b
+
 [Fixes]
 docker compose exec -u root openclaw-gateway mkdir -p /var/lib/apt/lists/partial
 docker compose exec -u root openclaw-gateway chmod 755 /var/lib/apt/lists/partial
